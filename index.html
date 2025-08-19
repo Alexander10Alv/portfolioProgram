@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexander - Full Stack Developer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <style>
+        /* ==========================================================================
+           LOADER STYLES
+           ========================================================================== */
+
+        /* Loader Overlay */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loader-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Developer Text Container */
+        .developer-text {
+            font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #0867d2;
+            letter-spacing: 3px;
+            text-align: center;
+            perspective: 1000px;
+            margin-bottom: 30px;
+        }
+
+        .text-wrapper {
+            display: inline-block;
+            transform-style: preserve-3d;
+            animation: textFlip 3s ease-in-out 0.5s, textGlow 4s ease-in-out infinite 3.5s;
+            letter-spacing: -1px;
+        }
+
+        /* Animación de Flip */
+        @keyframes textFlip {
+            0% { transform: rotateX(0deg); }
+            15% { transform: rotateX(180deg); }
+            30% { transform: rotateX(0deg); }
+            45% { transform: rotateX(180deg); }
+            60% { transform: rotateX(0deg); }
+            100% { transform: rotateX(0deg); }
+        }
+
+        /* Animación de Brillo */
+        @keyframes textGlow {
+            0%, 100% { 
+                text-shadow: 0 0 5px rgba(5, 32, 198, 0.3),
+                           0 0 10px rgba(5, 32, 198, 0.2),
+                           0 0 15px rgba(5, 32, 198, 0.1);
+            }
+            50% { 
+                text-shadow: 0 0 10px rgba(5, 32, 198, 0.6),
+                           0 0 20px rgba(5, 32, 198, 0.4),
+                           0 0 30px rgba(5, 32, 198, 0.2);
+            }
+        }
+
+        /* Efecto de escritura letra por letra */
+        .typing-text {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #0520c6;
+            animation: typing 2s steps(20, end) 0s, 
+                       blinkCursor 1s infinite 2s;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blinkCursor {
+            0%, 50% { border-color: #0520c6; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        /* Partículas de código flotante */
+        .code-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: rgba(5, 32, 198, 0.4);
+            animation: floatParticle 8s linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Loading dots */
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #0520c6, #1f2020);
+            animation: loadingDots 1.5s ease-in-out infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes loadingDots {
+            0%, 20%, 80%, 100% {
+                transform: scale(1) translateY(0);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.3) translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 300px;
+            height: 4px;
+            background: rgba(31, 32, 32, 0.1);
+            border-radius: 2px;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #0520c6, #1f2020, #0520c6);
+            border-radius: 2px;
+            animation: loadingProgress 3.5s ease-out forwards;
+        }
+
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Efecto Glitch para el loader */
+        .glitch-effect {
+            animation: glitchAnimation 0.8s ease-in-out;
+        }
+
+        @keyframes glitchAnimation {
+            0% {
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            }
+            10% {
+                background: linear-gradient(135deg, #0520c6 0%, #1f2020 100%);
+                filter: invert(1) hue-rotate(180deg);
+            }
+            15% {
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+                filter: none;
+            }
+            25% {
+                background: linear-gradient(135deg, #0520c6 0%, #1f2020 100%);
+                filter: invert(1) hue-rotate(180deg);
+            }
+            30% {
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+                filter: none;
+            }
+            40% {
+                background: linear-gradient(135deg, #0520c6 0%, #1f2020 100%);
+                filter: invert(1) hue-rotate(180deg);
+            }
+            45% {
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+                filter: none;
+            }
+            55% {
+                background: linear-gradient(135deg, #0520c6 0%, #1f2020 100%);
+                filter: invert(1) hue-rotate(180deg);
+            }
+            60% {
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+                filter: none;
+            }
+            100% {
+                background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+                filter: none;
+            }
+        }
+
+        .text-glitch {
+            animation: textGlitch 0.8s ease-in-out;
+        }
+
+        @keyframes textGlitch {
+            0% { 
+                color: #0867d2;
+                text-shadow: 0 0 5px rgba(5, 32, 198, 0.3);
+            }
+            10% { 
+                color: #ffffff;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                           2px 0 0 #ff0000,
+                           -2px 0 0 #00ffff;
+            }
+            15% { 
+                color: #0867d2;
+                text-shadow: 0 0 5px rgba(5, 32, 198, 0.3);
+            }
+            25% { 
+                color: #ffffff;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                           -2px 0 0 #ff0000,
+                           2px 0 0 #00ffff;
+            }
+            30% { 
+                color: #0867d2;
+                text-shadow: 0 0 5px rgba(5, 32, 198, 0.3);
+            }
+            40% { 
+                color: #ffffff;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                           1px 1px 0 #ff0000,
+                           -1px -1px 0 #00ffff;
+            }
+            45% { 
+                color: #0867d2;
+                text-shadow: 0 0 5px rgba(5, 32, 198, 0.3);
+            }
+            55% { 
+                color: #ffffff;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+                           3px 0 0 #ff0000,
+                           -3px 0 0 #00ffff;
+            }
+            60% { 
+                color: #0867d2;
+                text-shadow: 0 0 5px rgba(5, 32, 198, 0.3);
+            }
+            100% { 
+                color: #0867d2;
+                text-shadow: 0 0 5px rgba(5, 32, 198, 0.3);
+            }
+        }
+
+        /* Responsive para el loader */
+        @media (max-width: 768px) {
+            .developer-text {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+            
+            .progress-container {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .developer-text {
+                font-size: 1.4rem;
+                letter-spacing: 1px;
+            }
+            
+            .progress-container {
+                width: 200px;
+            }
+        }
+
+        /* ==========================================================================
+           MAIN PORTFOLIO STYLES
+           ========================================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --accent-blue: #0867d2;
+            --neon-blue: #00ffff;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #333;
+            --retro-glow: #00ff00;
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Busca la regla .navbar y reemplázala por esta: */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #78b3f2;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            padding: 8px 16px;
+        }
+
+        .navbar.scrolled .logo {
+            color: #333;
+            text-shadow: 0 0 5px #333;
+            border-color: #333;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 5px var(--accent-blue); }
+            50% { text-shadow: 0 0 20px var(--accent-blue), 0 0 30px var(--neon-blue); }
+            100% { text-shadow: 0 0 5px var(--accent-blue); }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+            text-shadow: 0 0 10px var(--accent-blue);
+        }
+
+       .hero {
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('assets/img/84418593_9953732.png'), linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
+            background-size: cover, cover;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center center, center center;
+            background-attachment: local, local;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .section {
+            position: relative;
+            z-index: 2;
+            background: var(--primary-bg);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(8, 103, 210, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+        }
+
+        /* ========== ANIMACIÓN PONG EN EL HERO ========== */
+        .pong-game {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+            overflow: hidden;
+        }
+
+        .pong-paddle-top {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 8px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--neon-blue));
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--accent-blue);
+            animation: paddleTopMove 3s ease-in-out infinite;
+        }
+
+        .pong-paddle-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 8px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--accent-blue));
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--neon-blue);
+            animation: paddleBottomMove 3s ease-in-out infinite;
+        }
+
+        .pong-ball {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #ffffff, var(--accent-blue));
+            border-radius: 50%;
+            box-shadow: 
+                0 0 10px #ffffff,
+                0 0 20px var(--accent-blue),
+                0 0 30px var(--neon-blue);
+            animation: ballBounce 3s linear infinite;
+        }
+
+        /* Animaciones de las paletas */
+        @keyframes paddleTopMove {
+            0%, 100% { 
+                transform: translateX(-50%) translateX(-30px); 
+            }
+            50% { 
+                transform: translateX(-50%) translateX(30px); 
+            }
+        }
+
+        @keyframes paddleBottomMove {
+            0%, 100% { 
+                transform: translateX(-50%) translateX(30px); 
+            }
+            50% { 
+                transform: translateX(-50%) translateX(-30px); 
+            }
+        }
+
+        /* Animación de la pelota */
+        @keyframes ballBounce {
+            0% {
+                top: calc(20px + 8px + 10px); /* Justo después de la paleta superior */
+                left: 45%;
+                transform: translate(-50%, -50%);
+            }
+            25% {
+                top: 40%;
+                left: 65%;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            50% {
+                top: calc(100% - 20px - 8px - 10px); /* Justo antes de la paleta inferior */
+                left: 55%;
+                transform: translate(-50%, -50%);
+            }
+            75% {
+                top: 60%;
+                left: 35%;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                top: calc(20px + 8px + 10px);
+                left: 45%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* Efectos adicionales */
+        .pong-trail {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: rgba(8, 103, 210, 0.4);
+            border-radius: 50%;
+            animation: trailBounce 3s linear infinite;
+            animation-delay: 0.1s;
+        }
+
+        .pong-trail:nth-child(5) {
+            animation-delay: 0.2s;
+            background: rgba(0, 255, 255, 0.3);
+        }
+
+        .pong-trail:nth-child(6) {
+            animation-delay: 0.3s;
+            background: rgba(8, 103, 210, 0.2);
+        }
+
+        @keyframes trailBounce {
+            0% {
+                top: calc(20px + 8px + 10px);
+                left: 45%;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            25% {
+                top: 40%;
+                left: 65%;
+                opacity: 0.8;
+            }
+            50% {
+                top: calc(100% - 20px - 8px - 10px);
+                left: 55%;
+                opacity: 0.6;
+            }
+            75% {
+                top: 60%;
+                left: 35%;
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                top: calc(20px + 8px + 10px);
+                left: 45%;
+                opacity: 0;
+            }
+        }
+
+        /* Línea central del campo */
+        .pong-center-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 10px,
+                rgba(8, 103, 210, 0.3) 10px,
+                rgba(8, 103, 210, 0.3) 20px
+            );
+            animation: centerLinePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes centerLinePulse {
+            0%, 100% { 
+                opacity: 0.3; 
+                box-shadow: 0 0 5px rgba(8, 103, 210, 0.2);
+            }
+            50% { 
+                opacity: 0.6; 
+                box-shadow: 0 0 15px rgba(8, 103, 210, 0.4);
+            }
+        }
+
+        /* Responsive para móvil */
+        @media (max-width: 768px) {
+            .pong-paddle-top,
+            .pong-paddle-bottom {
+                width: 80px;
+                height: 6px;
+            }
+            
+            .pong-ball {
+                width: 10px;
+                height: 10px;
+            }
+            
+            .pong-trail {
+                width: 6px;
+                height: 6px;
+            }
+            
+            .pong-game {
+                opacity: 0.2;
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 3;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-blue), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-family: 'Courier Prime', monospace;
+        }
+
+        .typing-effect {
+            border-right: 2px solid var(--accent-blue);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Retro Gaming Buttons */
+        .retro-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            border: none;
+            border-left: 3px solid var(--accent-blue);
+            border-bottom: 3px solid var(--accent-blue);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .retro-btn::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--retro-glow), transparent);
+            animation: scan 2s infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .retro-btn:hover {
+            background: var(--accent-blue);
+            box-shadow: 0 0 20px var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Floating Cards */
+        .floating-card {
+            animation: levitate 4s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes levitate {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .floating-card:hover {
+            transform: translateY(-20px) scale(1.05);
+            animation-play-state: paused;
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent-blue);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent-blue);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px var(--accent-blue); }
+            to { box-shadow: 0 0 20px var(--accent-blue), 0 0 30px var(--neon-blue); }
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 15px;
+            border: 3px solid var(--accent-blue);
+            background: var(--secondary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: var(--accent-blue);
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .profile-img {
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            object-position: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--secondary-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #10bc79;
+            border-bottom: 4px solid #10bc79;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* AGREGAR ESTA LÍNEA */
+        }
+
+        .skill-category h3 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid var(--accent-blue);
+            animation: pulse-soft 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { box-shadow: 0 0 5px rgba(8, 103, 210, 0.3); }
+            50% { box-shadow: 0 0 15px rgba(8, 103, 210, 0.6); }
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border-left: 3px solid var(--accent-blue);
+            border-bottom: 3px solid var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--accent-blue);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* AGREGAR ESTA LÍNEA */
+            line-height: 1.6; /* AGREGAR ESTA LÍNEA */
+
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: var(--accent-blue);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid var(--accent-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .project-link.disabled {
+            color: var(--text-secondary);
+            border-color: var(--text-secondary);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-details p {
+            color: var(--text-secondary);
+        }
+
+        .contact-details a {
+            color: var(--text-secondary) !important;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow-wrap: break-word;
+            display: inline-block;
+            max-width: 100%;
+            line-height: 1.4;
+        }
+
+        .contact-details a:hover {
+            color: var(--accent-blue) !important;
+            text-decoration: none;
+        }
+
+        .contact-details a:visited {
+            color: var(--text-secondary) !important;
+        }        
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            border-left: 3px solid var(--accent-blue);
+            border-bottom: 3px solid var(--accent-blue);
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: var(--accent-blue);
+        }
+
+        .contact-details h3 {
+            color: #78b3f2;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-details p {
+            color: var(--text-secondary);
+        }
+
+        /* Títulos específicos con color personalizado */
+        #skills .section-title,
+        #experience .section-title {
+            color: #78b3f2;
+        }
+
+        .experience-text {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+            color: #ffffff !important;
+            font-size: 1rem !important;
+            line-height: 1.7 !important;
+            font-weight: 400 !important;
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            animation: glitch-main 2s infinite;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.8;
+        }
+
+        .glitch::before {
+            animation: glitch-1 0.5s infinite;
+            color: #ff0000;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitch-2 0.5s infinite;
+            color: #00ffff;
+            z-index: -2;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 200px;      /* Ajusta según quieras */
+            object-fit: cover;  /* Recorta la imagen sin deformarla */
+            border-radius: 10px;
+            }
+
+        @keyframes glitch-main {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes glitch-1 {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes glitch-2 {
+            0% { transform: translate(0); }
+            20% { transform: translate(2px, -2px); }
+            40% { transform: translate(2px, 2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(-2px, 2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .about-image {
+                width: 200px;
+                height: 200px;
+                font-size: 3rem;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader Overlay -->
+    <div class="loader-overlay" id="loaderOverlay">
+        <!-- Partículas de código -->
+        <div class="code-particles" id="codeParticles"></div>
+        
+        <!-- Texto principal -->
+        <div class="developer-text">
+            <div class="text-wrapper typing-text">
+                &lt;Developer Alexander&gt;
+            </div>
+        </div>
+        
+        <!-- Loading dots -->
+        <div class="loading-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        
+        <!-- Progress bar -->
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">&lt;Alexander.dev&gt;</a>
+            <ul class="nav-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#about">Sobre Mí</a></li>
+                <li><a href="#skills">Habilidades</a></li>
+                <li><a href="#projects">Proyectos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Juego Pong de fondo -->
+        <div class="pong-game">
+            <div class="pong-center-line"></div>
+            <div class="pong-paddle-top"></div>
+            <div class="pong-paddle-bottom"></div>
+            <div class="pong-ball"></div>
+            <div class="pong-trail"></div>
+            <div class="pong-trail"></div>
+            <div class="pong-trail"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title glitch" data-text="ALEXANDER">ALEXANDER</h1>
+            <p class="hero-subtitle">
+                <span class="typing-effect">Full Stack Developer</span>
+            </p>
+            <a href="#projects" class="retro-btn">Ver Proyectos</a>
+        </div>
+    </section>
+
+   <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">Sobre Mí</h2>
+        <div class="about-content">
+            <div class="about-image floating-card">
+                <img src="assets/img/photo.png" alt="Alexander - Foto de perfil" class="profile-img">
+            </div>
+            <div class="about-text">
+                <p>¡Hola! Soy Alexander, un desarrollador Full Stack apasionado por crear soluciones tecnológicas innovadoras. Mi experiencia abarca tanto el desarrollo frontend como backend, con un enfoque especial en el ecosistema PHP/Laravel.</p>
+                
+                <p>Me especializo en desarrollar aplicaciones web robustas y escalables, desde sistemas de escritorio con Java hasta aplicaciones web modernas con tecnologías de vanguardia. Mi pasión por el código limpio y las mejores prácticas me impulsa a entregar siempre productos de alta calidad.</p>
+                
+                <p>Soy egresado de Ingeniería de Sistemas, lo que me ha proporcionado una base sólida 
+                en desarrollo de software y arquitectura de sistemas. Cuando no estoy programando, 
+                me mantengo actualizado con las últimas tendencias tecnológicas y disfruto explorando 
+                nuevas herramientas que puedan mejorar mis habilidades como desarrollador.</p>
+                
+                <a href="#contact" class="retro-btn">Contactar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <h2 class="section-title">Habilidades Técnicas</h2>
+        <div class="skills-grid">
+            <div class="skill-category floating-card">
+                <h3><i class="fas fa-server"></i> Backend Development</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">PHP</span>
+                    <span class="skill-tag">Laravel</span>
+                    <span class="skill-tag">Spatie Permissions</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">APIs RESTful</span>
+                </div>
+            </div>
+            
+            <div class="skill-category floating-card">
+                <h3><i class="fas fa-paint-brush"></i> Frontend Development</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">jQuery</span>
+                    <span class="skill-tag">Angular</span>
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                </div>
+            </div>
+            
+            <div class="skill-category floating-card">
+                <h3><i class="fas fa-palette"></i> UI/UX & Styling</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">Bootstrap</span>
+                    <span class="skill-tag">Responsive Design</span>
+                    <span class="skill-tag">CSS Animations</span>
+                    <span class="skill-tag">UI Components</span>
+                </div>
+            </div>
+            
+            <div class="skill-category floating-card">
+                <h3><i class="fas fa-database"></i> Database & Tools</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">Composer</span>
+                    <span class="skill-tag">NPM</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2 class="section-title">Proyectos Destacados</h2>
+        <div class="projects-grid">
+            <!-- Proyecto 1 - Con enlace -->
+            <div class="project-card floating-card">
+                <div class="project-image">
+                    <img src="assets/img/Captura de pantalla 2025-08-19 080504.png" alt="Magus Technologies Web" class="project-thumb">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Sitio Web Corporativo</h3>
+                    <p class="project-description">
+                            Desarrollo de la página web oficial de <strong>Magus Technologies</strong>, 
+                            diseñada para presentar la empresa a clientes potenciales, 
+                            mostrar sus servicios y facilitar el contacto. 
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://magustechnologies.com/" target="_blank"  class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
+                         <span class="project-link disabled"><i class="fab fa-github"></i> Privado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 2 - Con enlace -->
+            <div class="project-card floating-card">
+                <div class="project-image">
+                    <img src="assets/img/ecommerce.png" alt="E-commerce" class="project-thumb">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">E-commerce Web</h3>
+                    <p class="project-description">
+                        Plataforma de comercio electrónico desarrollada en conjunto con un colega. 
+                        El frontend fue implementado con <strong>Angular</strong> y <strong>TypeScript</strong>, 
+                        mientras que el backend se construyó con <strong>Laravel</strong>, 
+                        utilizando <strong>Spatie Permissions</strong> para la gestión de roles y permisos. 
+                        Incluye integración con base de datos, autenticación de usuarios, 
+                        catálogo de productos, gestión de pedidos y un completo <strong>panel administrativo</strong> 
+                        desde donde se pueden administrar productos, categorías, usuarios, roles, botones y más.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Angular</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">Laravel</span>
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">Spatie Permissions</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://magus-ecommerce.com/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
+                         <span class="project-link disabled"><i class="fab fa-github"></i> Privado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 3 - Solo imagen -->
+            <div class="project-card floating-card">
+                <div class="project-image">
+                    <img src="assets/img/arequipago.png" alt="Arequipago" class="project-thumb">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Sistema de Gestión para Empresa de Transporte</h3>
+                    <p class="project-description">
+                        Sistema web desarrollado en <strong>PHP puro</strong> para una empresa de transporte. 
+                        Incluye <strong>gestión de usuarios</strong> con autenticación y roles, reportes,
+                        administración de clientes y control de operaciones internas. 
+                        Construida con <strong>MySQL</strong> como base de datos y un 
+                        frontend clásico con <strong>HTML, CSS, JavaScript</strong> y 
+                        <strong>Bootstrap</strong>.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Bootstrap</span>
+                    </div>
+                    <div class="project-links">
+                        <span class="project-link disabled"><i class="fas fa-eye-slash"></i> Vista Previa</span>
+                        <span class="project-link disabled"><i class="fab fa-github"></i> Privado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyecto 4 - Solo imagen -->
+            <div class="project-card floating-card">
+                <div class="project-image">
+                    <img src="assets/img/Arek.png" alt="Arequipago" class="project-thumb">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Portfolio de Arte</h3>
+                    <p class="project-description">Sitio web personal diseñado para mostrar ilustraciones y proyectos artísticos. Incluye una galería interactiva y secciones de contacto.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Bootstrap</span>
+                    </div>
+                    <div class="project-links">
+                    <a class="project-link" href="https://alexander10alv.github.io/artPortfolio/" target="_blank">
+                        <i class="fas fa-eye"></i> Vista Previa
+                    </a>
+                    <a class="project-link" href="https://github.com/Alexander10Alv/artPortfolio" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <h2 class="section-title">Experiencia</h2>
+        <div class="skills-grid">
+            <div class="skill-category floating-card">
+                <h3><i class="fas fa-briefcase"></i> Desarrollador Full Stack</h3>
+                <p style="color: var(--accent-blue); margin-bottom: 0.5rem;">Magus Technologies | Febrero 2025 - Julio 2025</p>
+                <p class="experience-text">
+                    Desarrollo completo de aplicaciones web utilizando Laravel, Angular y TypeScript. 
+                    Implementación de sistemas de e-commerce, gestión de roles y permisos con Spatie, 
+                    creación de APIs RESTful y optimización de bases de datos. Trabajo en equipo 
+                    en ambiente dinámico con aprendizaje acelerado de nuevas tecnologías.
+                </p>
+            </div>
+            
+            <div class="skill-category floating-card">
+                <h3><i class="fas fa-code"></i> Desarrollador Junior</h3>
+                <p style="color: var(--accent-blue); margin-bottom: 0.5rem;">Magus Technologies | Diciembre 2024 - Febrero 2025</p>
+                <p class="experience-text">
+                    Inicio en desarrollo web profesional con PHP y Laravel. Colaboración en 
+                    proyectos de desarrollo frontend con HTML, CSS, JavaScript y Bootstrap. 
+                    Aprendizaje de metodologías ágiles y mejores prácticas de desarrollo.
+                </p>
+            </div>
+            
+            <div class="skill-category floating-card">
+                <h3><i class="fas fa-graduation-cap"></i> Freelance Developer</h3>
+                <p style="color: var(--accent-blue); margin-bottom: 0.5rem;">Independiente | Junio 2024 - Diciembre 2024</p>
+                <p class="experience-text">
+                    Desarrollo de sitios web corporativos personalizados. 
+                    Especialización en PHP, MySQL, HTML, CSS y JavaScript. Gestión de 
+                    de proyectos desde el diseño hasta la implementación.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2 class="section-title">Contacto</h2>
+        <div class="contact-content">
+            <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem;">
+                ¿Tienes un proyecto en mente? ¡Me encantaría ayudarte a hacerlo realidad!
+            </p>
+            
+            <div class="contact-info">
+                <div class="contact-item floating-card">
+                    <i class="fas fa-envelope"></i>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>
+                            <a href="mailto:pieromorales1033@gmail.com">pieromorales1033@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="contact-item floating-card">
+                    <i class="fab fa-github"></i>
+                    <div class="contact-details">
+                        <h3>GitHub</h3>
+                        <p>
+                            <a href="https://github.com/Alexander10Alv" target="_blank">
+                                github.com/Alexander10Alv
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="contact-item floating-card">
+                    <i class="fas fa-briefcase"></i>
+                    <div class="contact-details">
+                        <h3>Computrabajo</h3>
+                        <p>
+                            <a href="https://www.computrabajo.com.pe/tu-perfil" target="_blank">
+                                computrabajo.com/pe/tu-perfil
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="contact-item floating-card">
+                    <i class="fas fa-phone"></i>
+                    <div class="contact-details">
+                        <h3>Teléfono</h3>
+                        <p>
+                            <a href="tel:+51960906717" style="text-decoration:none; color:inherit;">
+                                +51 960906717
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div style="margin-top: 3rem;">
+                <a href="https://wa.me/51960906717?text=Hola%20Alexander,%20quiero%20contactarte" 
+                class="retro-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Enviar Mensaje
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // ==========================================================================
+        // FUNCIONES DEL LOADER
+        // ==========================================================================
+
+        // Función para crear partículas de código
+        function createCodeParticles() {
+            const particles = document.getElementById('codeParticles');
+            if (!particles) return;
+            
+            const codeSymbols = ['{}', '[]', '()', '<>', '/>', '==', '++', '--', '&&', '||', '!=', '==='];
+            
+            const particleInterval = setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.textContent = codeSymbols[Math.floor(Math.random() * codeSymbols.length)];
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                particle.style.fontSize = (Math.random() * 8 + 10) + 'px';
+                
+                particles.appendChild(particle);
+                
+                // Remover partícula después de la animación
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
+                }, 8000);
+            }, 300);
+            
+            // Parar partículas después de 4 segundos
+            setTimeout(() => {
+                clearInterval(particleInterval);
+            }, 4000);
+        }
+
+        // Función para ocultar el loader
+        function hideLoader() {
+            const loader = document.getElementById('loaderOverlay');
+            const developerText = document.querySelector('.text-wrapper');
+            
+            if (!loader) return;
+            
+            // Esperar 3.2 segundos, luego iniciar glitch
+            setTimeout(() => {
+                // Aplicar efecto glitch
+                loader.classList.add('glitch-effect');
+                if (developerText) {
+                    developerText.classList.add('text-glitch');
+                }
+                
+                // Después del glitch, ocultar el loader
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }, 800); // Duración del glitch
+                
+            }, 3200); // Esperar a que termine la barra de progreso
+        }
+
+        // Inicializar loader cuando carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.overflow = 'hidden';
+            createCodeParticles();
+            hideLoader();
+        });
+
+        // ==========================================================================
+        // FUNCIONES PRINCIPALES DEL PORTFOLIO
+        // ==========================================================================
+
+        $(document).ready(function() {
+            // Smooth scrolling para los enlaces de navegación
+            $('.nav-links a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                const target = $(this.getAttribute('href'));
+                if (target.length) {
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 80
+                    }, 1000);
+                }
+            });
+
+            // Efecto de escritura para el hero
+            const text = "Full Stack Developer";
+            const typingElement = $('.typing-effect');
+            let index = 0;
+
+            function typeWriter() {
+                if (index < text.length) {
+                    typingElement.text(text.slice(0, index + 1));
+                    index++;
+                    setTimeout(typeWriter, 100);
+                } else {
+                    // Reiniciar después de una pausa
+                    setTimeout(() => {
+                        index = 0;
+                        typingElement.text('');
+                        typeWriter();
+                    }, 3000);
+                }
+            }
+
+            // Iniciar efecto de escritura después del loader
+            setTimeout(() => {
+                typeWriter();
+            }, 4500);
+
+            // Efecto parallax para el hero
+            $(window).scroll(function() {
+                const scrolled = $(this).scrollTop();
+                const parallaxSpeed = 0.5;
+                $('.hero').css('transform', 'translateY(' + (scrolled * parallaxSpeed) + 'px)');
+            });
+
+            // Animación de aparición para las secciones
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observar todas las secciones
+            $('.section').each(function() {
+                this.style.opacity = '0';
+                this.style.transform = 'translateY(30px)';
+                this.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(this);
+            });
+
+            // Efecto hover para las tarjetas flotantes
+            $('.floating-card').hover(
+                function() {
+                    $(this).css({
+                        'transform': 'translateY(-20px) scale(1.05)',
+                        'animation-play-state': 'paused'
+                    });
+                },
+                function() {
+                    $(this).css({
+                        'transform': '',
+                        'animation-play-state': 'running'
+                    });
+                }
+            );
+
+            // Navegación activa
+            $(window).scroll(function() {
+                const scrollPos = $(this).scrollTop() + 100;
+                
+                $('.nav-links a[href^="#"]').each(function() {
+                    const targetId = $(this).attr('href');
+                    const targetSection = $(targetId);
+                    
+                    if (targetSection.length && 
+                        targetSection.offset().top <= scrollPos && 
+                        targetSection.offset().top + targetSection.outerHeight() > scrollPos) {
+                        $('.nav-links a').removeClass('active');
+                        $(this).addClass('active');
+                    }
+                });
+            });
+
+            // Easter egg: Konami code
+            let konamiCode = [];
+            const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
+            
+            $(document).keydown(function(e) {
+                konamiCode.push(e.keyCode);
+                if (konamiCode.length > konamiSequence.length) {
+                    konamiCode.shift();
+                }
+                
+                if (konamiCode.join(',') === konamiSequence.join(',')) {
+                    // Activar modo matrix
+                    $('body').addClass('matrix-mode');
+                    setTimeout(() => $('body').removeClass('matrix-mode'), 3000);
+                }
+            });
+        });
+
+        // Función para copiar email al clipboard
+        function copyEmail() {
+            const email = "tu.email@ejemplo.com";
+            navigator.clipboard.writeText(email).then(() => {
+                alert('Email copiado al clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>
