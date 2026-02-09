@@ -963,6 +963,12 @@
             color: var(--accent-blue);
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
+            transition: color 0.8s ease;
+        }
+
+        .project-title.illuminate {
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
         }
 
         .project-description {
@@ -1729,7 +1735,7 @@
     <section id="about" class="section">
         <h2 class="section-title">Sobre Mí</h2>
         <div class="about-content">
-            <div class="about-image floating-card">
+            <div class="about-image">
                 <img src="assets/img/photo.png" alt="Alexander - Foto de perfil" class="profile-img">
             </div>
             <div class="about-text">
@@ -1802,7 +1808,7 @@
         <h2 class="section-title">Proyectos Destacados</h2>
         <div class="projects-grid">
             <!-- Proyecto 1 - Con enlace -->
-            <div class="project-card floating-card">
+            <div class="project-card">
                 <div class="project-image">
                     <img src="assets/img/Captura de pantalla 2025-08-19 080504.png" alt="Magus Technologies Web" class="project-thumb">
                 </div>
@@ -1829,7 +1835,7 @@
             </div>
 
             <!-- Proyecto 2 - Con enlace -->
-            <div class="project-card floating-card">
+            <div class="project-card">
                 <div class="project-image">
                     <img src="assets/img/ecommerce.png" alt="E-commerce" class="project-thumb">
                 </div>
@@ -1863,7 +1869,7 @@
             </div>
 
             <!-- Proyecto 3 - Solo imagen -->
-            <div class="project-card floating-card">
+            <div class="project-card">
                 <div class="project-image">
                     <img src="assets/img/arequipago.png" alt="Arequipago" class="project-thumb">
                 </div>
@@ -1893,7 +1899,7 @@
             </div>
 
             <!-- Proyecto 4 - Solo imagen -->
-            <div class="project-card floating-card">
+            <div class="project-card">
                 <div class="project-image">
                     <img src="assets/img/Arek.png" alt="Arequipago" class="project-thumb">
                 </div>
@@ -1985,7 +1991,7 @@
             </p>
             
             <div class="contact-info">
-                <div class="contact-item floating-card">
+                <div class="contact-item">
                     <i class="fas fa-envelope"></i>
                     <div class="contact-details">
                         <h3>Email</h3>
@@ -1995,7 +2001,7 @@
                     </div>
                 </div>
                 
-                <div class="contact-item floating-card">
+                <div class="contact-item">
                     <i class="fab fa-github"></i>
                     <div class="contact-details">
                         <h3>GitHub</h3>
@@ -2007,7 +2013,7 @@
                     </div>
                 </div>
                 
-                <div class="contact-item floating-card">
+                <div class="contact-item">
                     <i class="fas fa-phone"></i>
                     <div class="contact-details">
                         <h3>Teléfono</h3>
@@ -2381,6 +2387,78 @@
             $scrollBtn.on('mouseenter', function() {
                 createSparks(this);
             });
+
+            // ==========================================================================
+            // ILUMINACIÓN SECUENCIAL DE TÍTULOS DE PROYECTOS
+            // ==========================================================================
+            
+            let projectIlluminationInterval = null;
+            let isProjectsSectionVisible = false;
+            
+            function startProjectIllumination() {
+                const $projectTitles = $('.project-title');
+                let currentIndex = 0;
+                
+                // Limpiar intervalo anterior si existe
+                if (projectIlluminationInterval) {
+                    clearInterval(projectIlluminationInterval);
+                }
+                
+                // Función para iluminar un proyecto
+                function illuminateProject() {
+                    // Quitar iluminación de todos
+                    $projectTitles.removeClass('illuminate');
+                    
+                    // Iluminar el actual
+                    $projectTitles.eq(currentIndex).addClass('illuminate');
+                    
+                    // Avanzar al siguiente
+                    currentIndex++;
+                    
+                    // Si llegamos al final, volver al inicio
+                    if (currentIndex >= $projectTitles.length) {
+                        currentIndex = 0;
+                    }
+                }
+                
+                // Iniciar inmediatamente
+                illuminateProject();
+                
+                // Continuar cada 3 segundos
+                projectIlluminationInterval = setInterval(illuminateProject, 3000);
+            }
+            
+            function stopProjectIllumination() {
+                if (projectIlluminationInterval) {
+                    clearInterval(projectIlluminationInterval);
+                    projectIlluminationInterval = null;
+                }
+                // Quitar todas las iluminaciones
+                $('.project-title').removeClass('illuminate');
+            }
+            
+            // Observer para detectar cuando la sección de proyectos está visible
+            const projectsObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.target.id === 'projects') {
+                        if (!isProjectsSectionVisible) {
+                            isProjectsSectionVisible = true;
+                            startProjectIllumination();
+                        }
+                    } else if (entry.target.id === 'projects') {
+                        isProjectsSectionVisible = false;
+                        stopProjectIllumination();
+                    }
+                });
+            }, {
+                threshold: 0.3 // Se activa cuando el 30% de la sección es visible
+            });
+            
+            // Observar la sección de proyectos
+            const projectsSection = document.getElementById('projects');
+            if (projectsSection) {
+                projectsObserver.observe(projectsSection);
+            }
         });
 
         // Función para copiar email al clipboard
