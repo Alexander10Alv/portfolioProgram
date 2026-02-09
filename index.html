@@ -361,6 +361,21 @@
             padding: 0 2rem;
         }
 
+        /* Navbar más ancha en pantallas grandes */
+        @media (min-width: 1600px) {
+            .nav-container {
+                max-width: 90%;
+                padding: 0 3rem;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .nav-container {
+                max-width: 95%;
+                padding: 0 4rem;
+            }
+        }
+
         .logo {
             font-size: 1.5rem;
             font-weight: 900;
@@ -423,7 +438,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('assets/img/84418593_9953732.png'), linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
+            background: url('https://dekadffkgfpeevwdvmbs.supabase.co/storage/v1/object/sign/web/5dc88b8b-3f4c-4946-bb01-369cc00baf85-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xYzhjNDQ0MS0yYzI1LTQ4ZGEtOTA5YS0wNDgxODMzNjdhMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ3ZWIvNWRjODhiOGItM2Y0Yy00OTQ2LWJiMDEtMzY5Y2MwMGJhZjg1LWV6Z2lmLmNvbS12aWRlby10by13ZWJwLWNvbnZlcnRlci53ZWJwIiwiaWF0IjoxNzcwNDA4ODgyLCJleHAiOjE4MDE5NDQ4ODJ9.qTyki7nKsaHV97nC8V1cER8xrX8u-kSbdjDx8ZPBvOg'), linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
             background-size: cover, cover;
             background-repeat: no-repeat, no-repeat;
             background-position: center center, center center;
@@ -446,9 +461,22 @@
             left: 0;
             width: 100%;
             height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: 
                 radial-gradient(circle at 20% 50%, rgba(8, 103, 210, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: 1;
         }
 
         /* ========== ANIMACIÓN PONG EN EL HERO ========== */
@@ -684,10 +712,7 @@
             font-size: 4rem;
             font-weight: 900;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--accent-blue), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #ffffff;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -722,8 +747,8 @@
             font-family: 'Orbitron', monospace;
             font-weight: 700;
             border: none;
-            border-left: 3px solid var(--accent-blue);
-            border-bottom: 3px solid var(--accent-blue);
+            border-left: 3px solid #ffffff;
+            border-bottom: 3px solid #ffffff;
             cursor: pointer;
             position: relative;
             transition: all 0.3s ease;
@@ -773,6 +798,21 @@
             padding: 5rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        /* Para pantallas muy grandes */
+        @media (min-width: 1600px) {
+            .section {
+                max-width: 1400px;
+                padding: 6rem 3rem;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .section {
+                max-width: 1600px;
+                padding: 7rem 4rem;
+            }
         }
 
         .section-title {
@@ -1053,6 +1093,187 @@
             font-weight: 400 !important;
         }
 
+        /* Timeline Experience Styles */
+        .timeline-container {
+            position: relative;
+            padding: 3rem 0;
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            right: 5%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--neon-blue));
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .timeline-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            padding: 0 5%;
+            position: relative;
+            z-index: 2;
+            min-height: 400px;
+            width: max-content;
+            min-width: 100%;
+        }
+
+        .timeline-card {
+            flex: 0 0 280px;
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 3px solid #10bc79;
+            border-bottom: 3px solid #10bc79;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            transform: none;
+            width: 15px;
+            height: 15px;
+            background: var(--accent-blue);
+            border: 3px solid var(--primary-bg);
+            border-radius: 50%;
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-card:hover {
+            transform: scale(1.15) translateY(-20px);
+            box-shadow: 0 20px 40px rgba(8, 103, 210, 0.4);
+            z-index: 10;
+        }
+
+        .timeline-card:hover h3 {
+            color: rgba(0, 255, 255, 0.8);
+        }
+
+        .timeline-card:hover .timeline-date {
+            color: rgba(0, 255, 255, 0.7);
+        }
+
+        .timeline-card:hover .experience-text {
+            color: rgba(0, 255, 255, 0.6) !important;
+        }
+
+        .timeline-card:hover::before {
+            width: 20px;
+            height: 20px;
+            background: var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .timeline-card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .timeline-card h3 i {
+            margin-right: 0.5rem;
+        }
+
+        .timeline-date {
+            color: var(--accent-blue);
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .timeline-card .experience-text {
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+        }
+
+        /* Mobile Carousel Styles */
+        @media (max-width: 768px) {
+            .timeline-line {
+                display: none;
+            }
+
+            .timeline-container {
+                overflow: visible;
+                padding: 2rem 0;
+                width: 100%;
+            }
+
+            .timeline-wrapper {
+                display: block;
+                width: 100%;
+                padding: 0 1rem;
+            }
+
+            .timeline-card {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                min-height: auto;
+                margin: 0 0 1.5rem 0;
+                padding: 1.5rem;
+                box-sizing: border-box;
+            }
+
+            .timeline-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.8rem;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                white-space: normal;
+            }
+
+            .timeline-card h3 i {
+                display: inline-block;
+                margin-right: 0.5rem;
+            }
+
+            .timeline-date {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                white-space: normal;
+                display: block;
+            }
+
+            .timeline-card .experience-text {
+                font-size: 0.9rem !important;
+                line-height: 1.6 !important;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                white-space: normal;
+                display: block;
+            }
+
+            /* Ocultar círculo decorativo en móvil */
+            .timeline-card::before {
+                display: none;
+            }
+
+            .timeline-card:hover {
+                transform: scale(1.02);
+            }
+
+            /* Ocultar dots en móvil */
+            .scroll-dots {
+                display: none;
+            }
+        }
+
         /* Glitch Effect */
         .glitch {
             position: relative;
@@ -1155,7 +1376,8 @@
 
         /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 6px;
+            height: 6px;
         }
 
         ::-webkit-scrollbar-track {
@@ -1169,6 +1391,194 @@
 
         ::-webkit-scrollbar-thumb:hover {
             background: var(--neon-blue);
+        }
+
+        /* Scrollbar específico para timeline */
+        .timeline-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .timeline-container::-webkit-scrollbar-track {
+            background: rgba(10, 10, 10, 0.5);
+            border-radius: 10px;
+        }
+
+        .timeline-container::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 10px;
+        }
+
+        .timeline-container::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-blue);
+        }
+
+        /* Forzar que la scrollbar siempre esté visible */
+        .timeline-container {
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-blue) rgba(10, 10, 10, 0.5);
+        }
+
+        /* ==========================================================================
+           BOTÓN SCROLL TO TOP
+           ========================================================================== */
+        
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(8, 103, 210, 0.4);
+            overflow: visible;
+        }
+
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            animation: floatButton 3s ease-in-out infinite;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.6);
+            border-color: var(--neon-blue);
+        }
+
+        .scroll-to-top i {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        .scroll-to-top:hover i {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        /* Animación de flotación */
+        @keyframes floatButton {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Efecto de carga circular */
+        .scroll-to-top::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: var(--neon-blue);
+            border-right-color: var(--neon-blue);
+            animation: spinLoader 2s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-to-top:hover::before {
+            opacity: 1;
+        }
+
+        /* Activar loader cuando está scrolleando */
+        .scroll-to-top.scrolling::before {
+            opacity: 1;
+        }
+
+        .scroll-to-top.scrolling {
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.6);
+            border-color: var(--neon-blue);
+        }
+
+        .scroll-to-top.scrolling i {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        @keyframes spinLoader {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Chispas tecnológicas */
+        .scroll-to-top::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent 40%, var(--neon-blue) 40%, var(--neon-blue) 45%, transparent 45%);
+            opacity: 0;
+            animation: sparkPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkPulse {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Partículas de chispas */
+        .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkFly 1s ease-out forwards;
+            box-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        @keyframes sparkFly {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+
+        /* Responsive para móvil */
+        @media (max-width: 768px) {
+            .scroll-to-top {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .scroll-to-top i {
+                font-size: 1.2rem;
+            }
         }
 
         /* Estilos para el botón hamburguesa */
@@ -1293,7 +1703,8 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <!-- Juego Pong de fondo -->
+        <!-- Juego Pong de fondo (COMENTADO PARA MEJORAR RENDIMIENTO) -->
+        <!--
         <div class="pong-game">
             <div class="pong-center-line"></div>
             <div class="pong-paddle-top"></div>
@@ -1303,6 +1714,7 @@
             <div class="pong-trail"></div>
             <div class="pong-trail"></div>
         </div>
+        -->
         
         <div class="hero-content">
             <h1 class="hero-title glitch" data-text="ALEXANDER">ALEXANDER</h1>
@@ -1511,38 +1923,57 @@
     <!-- Experience Section -->
     <section id="experience" class="section">
         <h2 class="section-title">Experiencia</h2>
-        <div class="skills-grid">
-            <div class="skill-category floating-card">
-                <h3><i class="fas fa-briefcase"></i> Desarrollador Full Stack</h3>
-                <p style="color: var(--accent-blue); margin-bottom: 0.5rem;">Magus Technologies | Febrero 2025 - Julio 2025</p>
-                <p class="experience-text">
-                    Desarrollo completo de aplicaciones web utilizando Laravel, Angular y TypeScript. 
-                    Implementación de sistemas de e-commerce, gestión de roles y permisos con Spatie, 
-                    creación de APIs RESTful y optimización de bases de datos. Trabajo en equipo 
-                    en ambiente dinámico con aprendizaje acelerado de nuevas tecnologías.
-                </p>
-            </div>
-            
-            <div class="skill-category floating-card">
-                <h3><i class="fas fa-code"></i> Desarrollador Junior</h3>
-                <p style="color: var(--accent-blue); margin-bottom: 0.5rem;">Magus Technologies | Diciembre 2024 - Febrero 2025</p>
-                <p class="experience-text">
-                    Inicio en desarrollo web profesional con PHP y Laravel. Colaboración en 
-                    proyectos de desarrollo frontend con HTML, CSS, JavaScript y Bootstrap. 
-                    Aprendizaje de metodologías ágiles y mejores prácticas de desarrollo.
-                </p>
-            </div>
-            
-            <div class="skill-category floating-card">
-                <h3><i class="fas fa-graduation-cap"></i> Freelance Developer</h3>
-                <p style="color: var(--accent-blue); margin-bottom: 0.5rem;">Independiente | Junio 2024 - Diciembre 2024</p>
-                <p class="experience-text">
-                    Desarrollo de sitios web corporativos personalizados. 
-                    Especialización en PHP, MySQL, HTML, CSS y JavaScript. Gestión de 
-                    de proyectos desde el diseño hasta la implementación.
-                </p>
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            <div class="timeline-wrapper">
+                <!-- Card 1 - Freelance Anterior (Inicio) -->
+                <div class="timeline-card floating-card">
+                    <h3><i class="fas fa-graduation-cap"></i> Freelance Developer</h3>
+                    <p class="timeline-date">Independiente | Junio 2024 - Diciembre 2024</p>
+                    <p class="experience-text">
+                        Desarrollo de sitios web corporativos personalizados. 
+                        Especialización en PHP, MySQL, HTML, CSS y JavaScript. Gestión de 
+                        proyectos desde el diseño hasta la implementación.
+                    </p>
+                </div>
+                
+                <!-- Card 2 - Junior -->
+                <div class="timeline-card floating-card">
+                    <h3><i class="fas fa-code"></i> Desarrollador Junior</h3>
+                    <p class="timeline-date">Magus Technologies | Diciembre 2024 - Febrero 2025</p>
+                    <p class="experience-text">
+                        Inicio en desarrollo web profesional con PHP y Laravel. Colaboración en 
+                        proyectos de desarrollo frontend con HTML, CSS, JavaScript y Bootstrap. 
+                        Aprendizaje de metodologías ágiles y mejores prácticas de desarrollo.
+                    </p>
+                </div>
+                
+                <!-- Card 3 - Full Stack -->
+                <div class="timeline-card floating-card">
+                    <h3><i class="fas fa-briefcase"></i> Desarrollador Full Stack</h3>
+                    <p class="timeline-date">Magus Technologies | Febrero 2025 - Septiembre 2025</p>
+                    <p class="experience-text">
+                        Desarrollo completo de aplicaciones web utilizando Laravel, Angular y TypeScript. 
+                        Implementación de sistemas de e-commerce, gestión de roles y permisos con Spatie, 
+                        creación de APIs RESTful y optimización de bases de datos.
+                    </p>
+                </div>
+                
+                <!-- Card 4 - Freelance Actual (Presente) -->
+                <div class="timeline-card floating-card">
+                    <h3><i class="fas fa-laptop-code"></i> Desarrollador Freelance</h3>
+                    <p class="timeline-date">Independiente | Septiembre 2025 - Presente</p>
+                    <p class="experience-text">
+                        Desarrollo de proyectos web personalizados con Laravel, Angular y TypeScript. 
+                        Implementación de integraciones mediante webhooks entre plataformas de e-commerce 
+                        y sistemas de facturación. Soluciones full stack para gestión empresarial y 
+                        aplicaciones a medida.
+                    </p>
+                </div>
             </div>
         </div>
+        <!-- Indicadores para móvil -->
+        <div class="scroll-dots" id="scrollDots"></div>
     </section>
 
     <!-- Contact Section -->
@@ -1577,18 +2008,6 @@
                 </div>
                 
                 <div class="contact-item floating-card">
-                    <i class="fas fa-briefcase"></i>
-                    <div class="contact-details">
-                        <h3>Computrabajo</h3>
-                        <p>
-                            <a href="https://www.computrabajo.com.pe/tu-perfil" target="_blank">
-                                computrabajo.com/pe/tu-perfil
-                            </a>
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="contact-item floating-card">
                     <i class="fas fa-phone"></i>
                     <div class="contact-details">
                         <h3>Teléfono</h3>
@@ -1611,6 +2030,11 @@
 
         </div>
     </section>
+
+    <!-- Botón Scroll to Top -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Volver arriba">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script>
         // ==========================================================================
@@ -1677,6 +2101,21 @@
             document.body.style.overflow = 'hidden';
             createCodeParticles();
             hideLoader();
+            
+            // Forzar scroll de timeline a la DERECHA
+            console.log('🔍 DOMContentLoaded - Intentando mover scroll a la DERECHA...');
+            setTimeout(function() {
+                const timelineContainer = document.querySelector('.timeline-container');
+                if (timelineContainer) {
+                    console.log('✅ Timeline container encontrado');
+                    console.log('📍 Scroll actual:', timelineContainer.scrollLeft);
+                    // Mover al final (derecha)
+                    timelineContainer.scrollLeft = 999999;
+                    console.log('📍 Scroll después de setear al máximo:', timelineContainer.scrollLeft);
+                } else {
+                    console.log('❌ Timeline container NO encontrado');
+                }
+            }, 100);
         });
 
         // ==========================================================================
@@ -1684,6 +2123,17 @@
         // ==========================================================================
 
         $(document).ready(function() {
+            // Forzar scroll de timeline a la DERECHA al cargar
+            console.log('🔍 jQuery Ready - Intentando mover scroll a la DERECHA...');
+            const $timeline = $('.timeline-container');
+            console.log('📦 Timeline encontrado:', $timeline.length);
+            if ($timeline.length) {
+                console.log('📍 Scroll actual (jQuery):', $timeline.scrollLeft());
+                // Mover al final (derecha) - usar un número grande
+                $timeline.scrollLeft(999999);
+                console.log('📍 Scroll después de setear al máximo (jQuery):', $timeline.scrollLeft());
+            }
+            
             // Smooth scrolling para los enlaces de navegación
             
             // Funcionalidad del menú hamburguesa (NUEVO)
@@ -1820,6 +2270,116 @@
                     $('body').addClass('matrix-mode');
                     setTimeout(() => $('body').removeClass('matrix-mode'), 3000);
                 }
+            });
+
+            // ==========================================================================
+            // TIMELINE CAROUSEL PARA MÓVIL
+            // ==========================================================================
+            
+            function initTimelineCarousel() {
+                const container = $('.timeline-container');
+                const cards = $('.timeline-card');
+                const dotsContainer = $('#scrollDots');
+                
+                console.log('🎠 initTimelineCarousel ejecutado');
+                console.log('📦 Container encontrado:', container.length);
+                console.log('📍 Scroll inicial:', container.scrollLeft());
+                
+                // Detectar si es móvil
+                const isMobile = $(window).width() <= 768;
+                
+                if (!isMobile) {
+                    // En PC: Mover scroll al FINAL (derecha)
+                    container.scrollLeft(999999);
+                    console.log('💻 Modo PC - Scroll al final:', container.scrollLeft());
+                } else {
+                    // En MÓVIL: Mostrar todas las cards en vertical (ya está en CSS)
+                    console.log('📱 Modo Móvil - Layout vertical');
+                }
+            }
+            
+            // Inicializar al cargar
+            initTimelineCarousel();
+            
+            // Reinicializar al cambiar tamaño de ventana
+            $(window).on('resize', function() {
+                initTimelineCarousel();
+            });
+
+            // ==========================================================================
+            // BOTÓN SCROLL TO TOP
+            // ==========================================================================
+            
+            const $scrollBtn = $('#scrollToTop');
+            let scrollTimeout;
+            
+            // Mostrar/ocultar botón según scroll y activar efecto mientras scrollea
+            $(window).on('scroll', function() {
+                if ($(this).scrollTop() > 300) {
+                    $scrollBtn.addClass('show');
+                    
+                    // Activar efecto de scrolling
+                    $scrollBtn.addClass('scrolling');
+                    
+                    // Crear chispas mientras scrollea (cada 200ms)
+                    if (!scrollTimeout) {
+                        createSparks($scrollBtn[0]);
+                    }
+                    
+                    // Limpiar timeout anterior
+                    clearTimeout(scrollTimeout);
+                    
+                    // Desactivar efecto después de 200ms sin scroll
+                    scrollTimeout = setTimeout(function() {
+                        $scrollBtn.removeClass('scrolling');
+                        scrollTimeout = null;
+                    }, 200);
+                } else {
+                    $scrollBtn.removeClass('show');
+                    $scrollBtn.removeClass('scrolling');
+                }
+            });
+            
+            // Función para crear chispas
+            function createSparks(button) {
+                const rect = button.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                for (let i = 0; i < 8; i++) {
+                    const spark = document.createElement('div');
+                    spark.className = 'spark';
+                    
+                    const angle = (Math.PI * 2 * i) / 8;
+                    const distance = 40 + Math.random() * 20;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
+                    spark.style.left = centerX + 'px';
+                    spark.style.top = centerY + 'px';
+                    spark.style.setProperty('--tx', tx + 'px');
+                    spark.style.setProperty('--ty', ty + 'px');
+                    
+                    document.body.appendChild(spark);
+                    
+                    setTimeout(() => spark.remove(), 1000);
+                }
+            }
+            
+            // Click en el botón
+            $scrollBtn.on('click', function() {
+                // Crear chispas
+                createSparks(this);
+                
+                // Scroll suave hacia arriba
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800, 'swing');
+            });
+            
+            // Efecto hover con chispas
+            $scrollBtn.on('mouseenter', function() {
+                createSparks(this);
             });
         });
 
