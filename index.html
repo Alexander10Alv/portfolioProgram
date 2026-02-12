@@ -1557,6 +1557,32 @@
             transition: all 0.3s ease;
         }
 
+        /* Fecha flotante sobre la card */
+        .floating-date {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            color: #000000;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 2px solid #d1d5db;
+            white-space: nowrap;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-card:hover .floating-date {
+            background: #00FFFF;
+            border-color: #00FFFF;
+            box-shadow: 0 6px 15px rgba(0, 255, 255, 0.4);
+            transform: translateX(-50%) translateY(-3px);
+        }
+
         .timeline-card:hover {
             transform: scale(1.15) translateY(-20px);
             box-shadow: 0 20px 40px rgba(8, 103, 210, 0.4);
@@ -2334,8 +2360,9 @@
             <div class="timeline-wrapper">
                 <!-- Card 1 - Freelance Anterior (Inicio) -->
                 <div class="timeline-card floating-card">
+                    <span class="floating-date">Junio 2024 - Diciembre 2024</span>
                     <h3><i class="fas fa-graduation-cap"></i> Freelance Developer</h3>
-                    <p class="timeline-date">Independiente | Junio 2024 - Diciembre 2024</p>
+                    <p class="timeline-date">Independiente</p>
                     <p class="experience-text">
                         Desarrollo de sitios web corporativos personalizados. 
                         Especialización en PHP, MySQL, HTML, CSS y JavaScript. Gestión de 
@@ -2345,8 +2372,9 @@
                 
                 <!-- Card 2 - Junior -->
                 <div class="timeline-card floating-card">
+                    <span class="floating-date">Diciembre 2024 - Febrero 2025</span>
                     <h3><i class="fas fa-code"></i> Desarrollador Junior</h3>
-                    <p class="timeline-date">Magus Technologies | Diciembre 2024 - Febrero 2025</p>
+                    <p class="timeline-date">Magus Technologies</p>
                     <p class="experience-text">
                         Inicio en desarrollo web profesional con PHP y Laravel. Colaboración en 
                         proyectos de desarrollo frontend con HTML, CSS, JavaScript y Bootstrap. 
@@ -2356,8 +2384,9 @@
                 
                 <!-- Card 3 - Full Stack -->
                 <div class="timeline-card floating-card">
+                    <span class="floating-date">Febrero 2025 - Septiembre 2025</span>
                     <h3><i class="fas fa-briefcase"></i> Desarrollador Full Stack</h3>
-                    <p class="timeline-date">Magus Technologies | Febrero 2025 - Septiembre 2025</p>
+                    <p class="timeline-date">Magus Technologies</p>
                     <p class="experience-text">
                         Desarrollo completo de aplicaciones web utilizando Laravel, Angular y TypeScript. 
                         Implementación de sistemas de e-commerce, gestión de roles y permisos con Spatie, 
@@ -2367,8 +2396,9 @@
                 
                 <!-- Card 4 - Freelance Actual (Presente) -->
                 <div class="timeline-card floating-card">
+                    <span class="floating-date">Septiembre 2025 - Presente</span>
                     <h3><i class="fas fa-laptop-code"></i> Desarrollador Freelance</h3>
-                    <p class="timeline-date">Independiente | Septiembre 2025 - Presente</p>
+                    <p class="timeline-date">Independiente</p>
                     <p class="experience-text">
                         Desarrollo de proyectos web personalizados con Laravel, Angular y TypeScript. 
                         Implementación de integraciones mediante webhooks entre plataformas de e-commerce 
