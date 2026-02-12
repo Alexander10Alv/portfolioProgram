@@ -329,12 +329,19 @@
             --retro-glow: #00ff00;
         }
 
+        html {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
         body {
             font-family: 'Orbitron', monospace;
             background: var(--primary-bg);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            max-width: 100%;
+            position: relative;
         }
 
         /* Busca la regla .navbar y reemplázala por esta: */
@@ -1174,9 +1181,48 @@
             border-radius: 15px;
             border: 2px solid var(--accent-blue);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Animaciones de entrada desde diferentes direcciones */
+        .skill-category:nth-child(1) {
+            transform: translateY(-100px);
+        }
+
+        .skill-category:nth-child(2) {
+            transform: translateX(100px);
+        }
+
+        .skill-category:nth-child(3) {
+            transform: translateX(-100px);
+        }
+
+        .skill-category:nth-child(4) {
+            transform: translateY(100px);
+        }
+
+        .skill-category.animate {
+            opacity: 1 !important;
+            transform: translate(0, 0) !important;
+        }
+
+        .skill-category:nth-child(1).animate {
+            transition-delay: 0s;
+        }
+
+        .skill-category:nth-child(2).animate {
+            transition-delay: 0.15s;
+        }
+
+        .skill-category:nth-child(3).animate {
+            transition-delay: 0.3s;
+        }
+
+        .skill-category:nth-child(4).animate {
+            transition-delay: 0.45s;
         }
 
         .skill-category::before {
@@ -1194,8 +1240,8 @@
             left: 100%;
         }
 
-        .skill-category:hover {
-            transform: translateY(-5px);
+        .skill-category.animate:hover {
+            transform: translateY(-5px) !important;
             border-color: #a78bfa;
             box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3);
         }
@@ -1421,6 +1467,36 @@
         }
 
         /* Contact Section */
+        #contact {
+            position: relative;
+            overflow: visible;
+        }
+
+        #contact::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 60%;
+            background: linear-gradient(
+                to top,
+                rgba(8, 103, 210, 0.3) 0%,
+                rgba(167, 139, 250, 0.25) 30%,
+                rgba(0, 255, 255, 0.2) 60%,
+                transparent 100%
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #contact .section-title,
+        #contact .contact-content {
+            position: relative;
+            z-index: 1;
+        }
+
         .contact-content {
             text-align: center;
         }
@@ -1833,6 +1909,15 @@
         .timeline-container {
             scrollbar-width: thin;
             scrollbar-color: var(--accent-blue) rgba(10, 10, 10, 0.5);
+        }
+
+        /* Ocultar scrollbar horizontal del body */
+        body::-webkit-scrollbar-x {
+            display: none;
+        }
+
+        html::-webkit-scrollbar-x {
+            display: none;
         }
 
         /* ==========================================================================
@@ -2991,24 +3076,28 @@
             // ANIMACIÓN DE BARRAS DE PROGRESO EN SKILLS
             // ==========================================================================
             
-            let skillsAnimated = false;
-            
             const skillsObserver = new IntersectionObserver(function(entries) {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting && !skillsAnimated) {
-                        skillsAnimated = true;
-                        
-                        // Animar todas las categorías de habilidades
-                        const skillCategories = document.querySelectorAll('.skill-category');
-                        skillCategories.forEach((category, index) => {
-                            setTimeout(() => {
-                                category.classList.add('animate');
-                            }, index * 200); // Delay escalonado para cada categoría
+                    const skillCategories = document.querySelectorAll('.skill-category');
+                    
+                    if (entry.isIntersecting) {
+                        // Pequeño delay para asegurar que el navegador aplique las transiciones
+                        setTimeout(() => {
+                            skillCategories.forEach((category, index) => {
+                                setTimeout(() => {
+                                    category.classList.add('animate');
+                                }, index * 150);
+                            });
+                        }, 50);
+                    } else {
+                        // Remover la clase cuando sale de la vista para que se reactive
+                        skillCategories.forEach(category => {
+                            category.classList.remove('animate');
                         });
                     }
                 });
             }, {
-                threshold: 0.3 // Se activa cuando el 30% de la sección es visible
+                threshold: 0.2 // Se activa cuando el 20% de la sección es visible
             });
             
             // Observar la sección de skills
