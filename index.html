@@ -330,8 +330,11 @@
         }
 
         html {
-            overflow-x: hidden;
+            overflow-x: hidden !important;
+            overflow-y: auto;
             max-width: 100%;
+            width: 100%;
+            height: 100%;
         }
 
         body {
@@ -339,9 +342,58 @@
             background: var(--primary-bg);
             color: var(--text-primary);
             line-height: 1.6;
-            overflow-x: hidden;
+            overflow-x: hidden !important;
+            overflow-y: auto;
             max-width: 100%;
+            width: 100%;
+            height: auto;
+            min-height: 100%;
             position: relative;
+        }
+
+        /* Scrollbar personalizada gris discreto */
+        body::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-left: 1px solid #2a2a2a;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: #3a3a3a;
+            border-radius: 5px;
+            border: 2px solid #2a2a2a;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: #4a4a4a;
+        }
+
+        /* Para Firefox */
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: #3a3a3a #1a1a1a;
+        }
+
+        /* Ocultar scrollbar horizontal completamente */
+        body::-webkit-scrollbar-x,
+        html::-webkit-scrollbar-x {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+
+        body::-webkit-scrollbar:horizontal,
+        html::-webkit-scrollbar:horizontal {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+
+        * {
+            max-width: 100%;
         }
 
         /* Busca la regla .navbar y reemplázala por esta: */
@@ -1469,7 +1521,6 @@
         /* Contact Section */
         #contact {
             position: relative;
-            overflow: visible;
         }
 
         #contact::before {
@@ -1909,15 +1960,6 @@
         .timeline-container {
             scrollbar-width: thin;
             scrollbar-color: var(--accent-blue) rgba(10, 10, 10, 0.5);
-        }
-
-        /* Ocultar scrollbar horizontal del body */
-        body::-webkit-scrollbar-x {
-            display: none;
-        }
-
-        html::-webkit-scrollbar-x {
-            display: none;
         }
 
         /* ==========================================================================
@@ -2611,7 +2653,7 @@
                 // Después del glitch, ocultar el loader
                 setTimeout(() => {
                     loader.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
+                    document.body.style.overflow = '';
                 }, 800); // Duración del glitch
                 
             }, 3200); // Esperar a que termine la barra de progreso
