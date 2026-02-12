@@ -434,18 +434,18 @@
         }
 
        .hero {
-            height: 85vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: url('https://dekadffkgfpeevwdvmbs.supabase.co/storage/v1/object/sign/web/5dc88b8b-3f4c-4946-bb01-369cc00baf85-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xYzhjNDQ0MS0yYzI1LTQ4ZGEtOTA5YS0wNDgxODMzNjdhMDAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ3ZWIvNWRjODhiOGItM2Y0Yy00OTQ2LWJiMDEtMzY5Y2MwMGJhZjg1LWV6Z2lmLmNvbS12aWRlby10by13ZWJwLWNvbnZlcnRlci53ZWJwIiwiaWF0IjoxNzcwNDA4ODgyLCJleHAiOjE4MDE5NDQ4ODJ9.qTyki7nKsaHV97nC8V1cER8xrX8u-kSbdjDx8ZPBvOg'), linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
-            background-size: cover, cover;
-            background-repeat: no-repeat, no-repeat;
-            background-position: center center, center center;
-            background-attachment: local, local;
+            background: linear-gradient(45deg, var(--primary-bg), var(--secondary-bg));
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
             position: relative;
             overflow: hidden;
             z-index: 1;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><filter id="glow"><feGaussianBlur stdDeviation="1" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M2 2 L2 22 L8 16 L12 26 L16 24 L12 14 L20 14 Z" fill="%230867D2" stroke="%2300FFFF" stroke-width="1.5" filter="url(%23glow)"/><path d="M2 2 L2 22 L8 16 L12 26 L16 24 L12 14 L20 14 Z" fill="%2300FFFF" opacity="0.3"/></svg>') 2 2, auto;
         }
 
         .section {
@@ -461,8 +461,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(3px);
+            background: rgba(0, 0, 0, 0.3);
             z-index: 1;
         }
 
@@ -475,8 +474,163 @@
             height: 100%;
             background: 
                 radial-gradient(circle at 20% 50%, rgba(8, 103, 210, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(167, 139, 250, 0.1) 0%, transparent 50%);
             z-index: 1;
+        }
+
+        /* ========== BLOQUES TETRIS EN LA PARTE SUPERIOR ========== */
+        .tetris-blocks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            pointer-events: none;
+            z-index: 2;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding: 20px;
+            gap: 10px;
+        }
+
+        .tetris-block {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            animation: blockFloat 3s ease-in-out infinite;
+        }
+
+        .tetris-block:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .tetris-block:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .tetris-block:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .tetris-block:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        .tetris-block:nth-child(5) {
+            animation-delay: 2s;
+        }
+
+        @keyframes blockFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+        /* Bloque L */
+        .block-l {
+            display: grid;
+            grid-template-columns: repeat(3, 20px);
+            grid-template-rows: repeat(3, 20px);
+            gap: 2px;
+        }
+
+        .block-l .cell {
+            background: var(--accent-blue);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 10px rgba(8, 103, 210, 0.5);
+        }
+
+        .block-l .cell:nth-child(1),
+        .block-l .cell:nth-child(4),
+        .block-l .cell:nth-child(7),
+        .block-l .cell:nth-child(8) {
+            opacity: 1;
+        }
+
+        .block-l .cell:not(:nth-child(1)):not(:nth-child(4)):not(:nth-child(7)):not(:nth-child(8)) {
+            opacity: 0;
+        }
+
+        /* Bloque T */
+        .block-t {
+            display: grid;
+            grid-template-columns: repeat(3, 20px);
+            grid-template-rows: repeat(2, 20px);
+            gap: 2px;
+        }
+
+        .block-t .cell {
+            background: var(--neon-blue);
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .block-t .cell:nth-child(1),
+        .block-t .cell:nth-child(2),
+        .block-t .cell:nth-child(3),
+        .block-t .cell:nth-child(5) {
+            opacity: 1;
+        }
+
+        .block-t .cell:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(5)) {
+            opacity: 0;
+        }
+
+        /* Bloque I */
+        .block-i {
+            display: grid;
+            grid-template-columns: 20px;
+            grid-template-rows: repeat(4, 20px);
+            gap: 2px;
+        }
+
+        .block-i .cell {
+            background: #a78bfa;
+            border: 2px solid #c4b5fd;
+            box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+        }
+
+        /* Bloque O */
+        .block-o {
+            display: grid;
+            grid-template-columns: repeat(2, 20px);
+            grid-template-rows: repeat(2, 20px);
+            gap: 2px;
+        }
+
+        .block-o .cell {
+            background: #10b981;
+            border: 2px solid #34d399;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Bloque Z */
+        .block-z {
+            display: grid;
+            grid-template-columns: repeat(3, 20px);
+            grid-template-rows: repeat(2, 20px);
+            gap: 2px;
+        }
+
+        .block-z .cell {
+            background: #ef4444;
+            border: 2px solid #f87171;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .block-z .cell:nth-child(1),
+        .block-z .cell:nth-child(2),
+        .block-z .cell:nth-child(5),
+        .block-z .cell:nth-child(6) {
+            opacity: 1;
+        }
+
+        .block-z .cell:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(5)):not(:nth-child(6)) {
+            opacity: 0;
         }
 
         /* ========== ANIMACIÓN PONG EN EL HERO ========== */
@@ -494,28 +648,28 @@
 
         .pong-paddle-top {
             position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 8px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--neon-blue));
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 120px;
+            background: linear-gradient(180deg, var(--accent-blue), var(--neon-blue));
             border-radius: 4px;
             box-shadow: 0 0 10px var(--accent-blue);
-            animation: paddleTopMove 3s ease-in-out infinite;
+            animation: paddleLeftMove 3s ease-in-out infinite;
         }
 
         .pong-paddle-bottom {
             position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 8px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--accent-blue));
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 120px;
+            background: linear-gradient(180deg, var(--neon-blue), var(--accent-blue));
             border-radius: 4px;
             box-shadow: 0 0 10px var(--neon-blue);
-            animation: paddleBottomMove 3s ease-in-out infinite;
+            animation: paddleRightMove 3s ease-in-out infinite;
         }
 
         .pong-ball {
@@ -534,49 +688,49 @@
         }
 
         /* Animaciones de las paletas */
-        @keyframes paddleTopMove {
+        @keyframes paddleLeftMove {
             0%, 100% { 
-                transform: translateX(-50%) translateX(-30px); 
+                transform: translateY(-50%) translateY(-30px); 
             }
             50% { 
-                transform: translateX(-50%) translateX(30px); 
+                transform: translateY(-50%) translateY(30px); 
             }
         }
 
-        @keyframes paddleBottomMove {
+        @keyframes paddleRightMove {
             0%, 100% { 
-                transform: translateX(-50%) translateX(30px); 
+                transform: translateY(-50%) translateY(30px); 
             }
             50% { 
-                transform: translateX(-50%) translateX(-30px); 
+                transform: translateY(-50%) translateY(-30px); 
             }
         }
 
         /* Animación de la pelota */
         @keyframes ballBounce {
             0% {
-                top: calc(20px + 8px + 10px); /* Justo después de la paleta superior */
-                left: 45%;
+                left: calc(20px + 8px + 10px); /* Justo después de la paleta izquierda */
+                top: 45%;
                 transform: translate(-50%, -50%);
             }
             25% {
-                top: 40%;
-                left: 65%;
+                left: 40%;
+                top: 65%;
                 transform: translate(-50%, -50%) scale(1.2);
             }
             50% {
-                top: calc(100% - 20px - 8px - 10px); /* Justo antes de la paleta inferior */
-                left: 55%;
+                left: calc(100% - 20px - 8px - 10px); /* Justo antes de la paleta derecha */
+                top: 55%;
                 transform: translate(-50%, -50%);
             }
             75% {
-                top: 60%;
-                left: 35%;
+                left: 60%;
+                top: 35%;
                 transform: translate(-50%, -50%) scale(1.2);
             }
             100% {
-                top: calc(20px + 8px + 10px);
-                left: 45%;
+                left: calc(20px + 8px + 10px);
+                top: 45%;
                 transform: translate(-50%, -50%);
             }
         }
@@ -606,34 +760,34 @@
 
         @keyframes trailBounce {
             0% {
-                top: calc(20px + 8px + 10px);
-                left: 45%;
+                left: calc(20px + 8px + 10px);
+                top: 45%;
                 opacity: 0;
             }
             10% {
                 opacity: 1;
             }
             25% {
-                top: 40%;
-                left: 65%;
+                left: 40%;
+                top: 65%;
                 opacity: 0.8;
             }
             50% {
-                top: calc(100% - 20px - 8px - 10px);
-                left: 55%;
+                left: calc(100% - 20px - 8px - 10px);
+                top: 55%;
                 opacity: 0.6;
             }
             75% {
-                top: 60%;
-                left: 35%;
+                left: 60%;
+                top: 35%;
                 opacity: 0.4;
             }
             90% {
                 opacity: 0.2;
             }
             100% {
-                top: calc(20px + 8px + 10px);
-                left: 45%;
+                left: calc(20px + 8px + 10px);
+                top: 45%;
                 opacity: 0;
             }
         }
@@ -641,13 +795,13 @@
         /* Línea central del campo */
         .pong-center-line {
             position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            height: 2px;
             background: repeating-linear-gradient(
-                to bottom,
+                to right,
                 transparent 0px,
                 transparent 10px,
                 rgba(8, 103, 210, 0.3) 10px,
@@ -690,6 +844,59 @@
             }
         }
 
+        /* ========== CUADRADOS CAYENDO ========== */
+        .falling-squares {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.5;
+            overflow: hidden;
+        }
+
+        .square {
+            position: absolute;
+            background: var(--accent-blue);
+            box-shadow: 0 0 5px var(--accent-blue);
+            animation: fallDown 5s linear infinite;
+        }
+
+        /* Píxeles pequeños cayendo solo en los extremos (izquierda y derecha) */
+        /* Lado izquierdo */
+        .square:nth-child(1) { width: 8px; height: 8px; left: 2%; animation-delay: 0s; }
+        .square:nth-child(2) { width: 6px; height: 6px; left: 5%; animation-delay: 0.5s; }
+        .square:nth-child(3) { width: 7px; height: 7px; left: 8%; animation-delay: 1s; }
+        .square:nth-child(4) { width: 9px; height: 9px; left: 11%; animation-delay: 1.5s; }
+        .square:nth-child(5) { width: 6px; height: 6px; left: 14%; animation-delay: 2s; }
+        .square:nth-child(6) { width: 8px; height: 8px; left: 17%; animation-delay: 2.5s; }
+        .square:nth-child(7) { width: 7px; height: 7px; left: 20%; animation-delay: 0.3s; }
+        .square:nth-child(8) { width: 9px; height: 9px; left: 3%; animation-delay: 1.8s; }
+        
+        /* Lado derecho */
+        .square:nth-child(9) { width: 8px; height: 8px; left: 80%; animation-delay: 0.2s; }
+        .square:nth-child(10) { width: 6px; height: 6px; left: 83%; animation-delay: 0.7s; }
+        .square:nth-child(11) { width: 7px; height: 7px; left: 86%; animation-delay: 1.2s; }
+        .square:nth-child(12) { width: 9px; height: 9px; left: 89%; animation-delay: 1.7s; }
+        .square:nth-child(13) { width: 6px; height: 6px; left: 92%; animation-delay: 2.2s; }
+        .square:nth-child(14) { width: 8px; height: 8px; left: 95%; animation-delay: 0.4s; }
+        .square:nth-child(15) { width: 7px; height: 7px; left: 98%; animation-delay: 1.4s; }
+
+        @keyframes fallDown {
+            0% {
+                top: -20px;
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                top: 110%;
+                transform: rotate(180deg);
+                opacity: 0.2;
+            }
+        }
+
         .hero-content {
             text-align: center;
             z-index: 3;
@@ -710,10 +917,13 @@
 
         .hero-title {
             font-size: 4rem;
-            font-weight: 900;
+            font-weight: 300;
             margin-bottom: 1rem;
-            color: #ffffff;
-            animation: float 3s ease-in-out infinite;
+            color: #d1d5db;
+            position: relative;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
         }
 
         @keyframes float {
@@ -729,26 +939,31 @@
         }
 
         .typing-effect {
-            border-right: 2px solid var(--accent-blue);
-            animation: blink 1s infinite;
+            animation: textGlow 3s ease-in-out infinite;
         }
 
-        @keyframes blink {
-            50% { border-color: transparent; }
+        @keyframes textGlow {
+            0%, 100% {
+                color: var(--text-secondary);
+                text-shadow: none;
+            }
+            50% {
+                color: #e5e7eb;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 15px rgba(255, 255, 255, 0.2);
+            }
         }
 
         /* Retro Gaming Buttons */
         .retro-btn {
             display: inline-block;
             padding: 12px 30px;
-            background: var(--secondary-bg);
-            color: var(--text-primary);
+            background: #000000;
+            color: #d1d5db;
             text-decoration: none;
             font-family: 'Orbitron', monospace;
             font-weight: 700;
-            border: none;
-            border-left: 3px solid #ffffff;
-            border-bottom: 3px solid #ffffff;
+            border: 2px solid #d1d5db;
+            border-radius: 25px;
             cursor: pointer;
             position: relative;
             transition: all 0.3s ease;
@@ -772,8 +987,9 @@
         }
 
         .retro-btn:hover {
-            background: var(--accent-blue);
-            box-shadow: 0 0 20px var(--accent-blue);
+            background: #d1d5db;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(209, 213, 219, 0.5);
             transform: translateY(-2px);
         }
 
@@ -844,88 +1060,270 @@
         .about-content {
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
         }
 
         .about-image {
-            width: 300px;
-            height: 300px;
+            width: 240px;
+            height: 240px;
             border-radius: 15px;
             border: 3px solid var(--accent-blue);
-            background: var(--secondary-bg);
+            background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
-            color: var(--accent-blue);
             margin: 0 auto;
             padding: 10px;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(8, 103, 210, 0.3);
         }
 
         .profile-img {
-            width: 280px;
-            height: 280px;
+            width: 220px;
+            height: 220px;
             object-fit: cover;
             border-radius: 12px;
             object-position: center;
         }
 
         .about-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1.05rem;
+            line-height: 2;
             color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier Prime', 'Courier New', monospace;
         }
 
         .about-text p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             color: #ffffff;
-            font-weight: 400;
-            text-align: justify;
+            font-weight: 300;
+            text-align: left;
+            opacity: 0;
+        }
+
+        .about-text p.typing {
+            opacity: 1;
+        }
+
+        /* Cursor parpadeante estilo retro */
+        .typing-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background: var(--neon-blue);
+            margin-left: 2px;
+            animation: blink-cursor 0.7s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink-cursor {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Efecto de escaneo retro */
+        .about-text::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            animation: scanline 3s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(400px); }
+        }
+
+        .about-text p:last-of-type {
+            margin-bottom: 2.5rem;
+        }
+
+        /* Colores retro para palabras clave */
+        .about-text .highlight-blue {
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        .about-text .highlight-purple {
+            color: #a78bfa;
+            font-weight: 500;
         }
 
         /* Skills Section */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .skill-category {
             background: var(--secondary-bg);
             padding: 2rem;
             border-radius: 15px;
-            border-left: 4px solid #10bc79;
-            border-bottom: 4px solid #10bc79;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* AGREGAR ESTA LÍNEA */
+            border: 2px solid var(--accent-blue);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .skill-category:hover::before {
+            left: 100%;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            border-color: #a78bfa;
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3);
         }
 
         .skill-category h3 {
             color: var(--accent-blue);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .skill-category:hover h3 {
+            color: #a78bfa;
+        }
+
+        .skill-category h3 i {
+            font-size: 1.5rem;
         }
 
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.8rem;
+            position: relative;
+            z-index: 1;
         }
 
         .skill-tag {
-            background: var(--primary-bg);
-            color: var(--text-primary);
+            display: inline-block;
             padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
+            background: var(--primary-bg);
+            color: #e5e7eb;
             border: 1px solid var(--accent-blue);
-            animation: pulse-soft 3s ease-in-out infinite;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes pulse-soft {
-            0%, 100% { box-shadow: 0 0 5px rgba(8, 103, 210, 0.3); }
-            50% { box-shadow: 0 0 15px rgba(8, 103, 210, 0.6); }
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.2), transparent);
+            transition: left 0.4s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: #a78bfa;
+            color: #a78bfa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+        }
+
+        .skill-tag:hover::before {
+            left: 100%;
+        }
+
+        .skill-item {
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .skill-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+        }
+
+        .skill-level {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--primary-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), #a78bfa);
+            border-radius: 10px;
+            width: 0;
+            transition: width 1.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .skill-category.animate .skill-progress {
+            width: var(--skill-width);
         }
 
         /* Projects Section */
@@ -1280,31 +1678,18 @@
             }
         }
 
-        /* Glitch Effect */
+        /* Glitch Effect - DESACTIVADO */
         .glitch {
             position: relative;
-            animation: glitch-main 2s infinite;
+        }
+
+        .glitch.active {
+            /* Efecto desactivado */
         }
 
         .glitch::before,
         .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0.8;
-        }
-
-        .glitch::before {
-            animation: glitch-1 0.5s infinite;
-            color: #ff0000;
-            z-index: -1;
-        }
-
-        .glitch::after {
-            animation: glitch-2 0.5s infinite;
-            color: #00ffff;
-            z-index: -2;
+            display: none;
         }
 
         .project-image img {
@@ -1709,8 +2094,7 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <!-- Juego Pong de fondo (COMENTADO PARA MEJORAR RENDIMIENTO) -->
-        <!--
+        <!-- Juego Pong de fondo -->
         <div class="pong-game">
             <div class="pong-center-line"></div>
             <div class="pong-paddle-top"></div>
@@ -1720,7 +2104,25 @@
             <div class="pong-trail"></div>
             <div class="pong-trail"></div>
         </div>
-        -->
+
+        <!-- Cuadrados cayendo como nieve -->
+        <div class="falling-squares" style="display: none;">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
         
         <div class="hero-content">
             <h1 class="hero-title glitch" data-text="ALEXANDER">ALEXANDER</h1>
@@ -1739,14 +2141,11 @@
                 <img src="assets/img/photo.png" alt="Alexander - Foto de perfil" class="profile-img">
             </div>
             <div class="about-text">
-                <p>¡Hola! Soy Alexander, un desarrollador Full Stack apasionado por crear soluciones tecnológicas innovadoras. Mi experiencia abarca tanto el desarrollo frontend como backend, con un enfoque especial en el ecosistema PHP/Laravel.</p>
+                <p id="about-p1">¡Hola! Soy <span class="highlight-purple">Alexander</span>, desarrollador <span class="highlight-blue">Full Stack</span> apasionado por crear soluciones tecnológicas innovadoras.</p>
                 
-                <p>Me especializo en desarrollar aplicaciones web robustas y escalables, desde sistemas de escritorio con Java hasta aplicaciones web modernas con tecnologías de vanguardia. Mi pasión por el código limpio y las mejores prácticas me impulsa a entregar siempre productos de alta calidad.</p>
+                <p id="about-p2">Me especializo en desarrollar aplicaciones web robustas y escalables con <span class="highlight-purple">PHP/Laravel</span>, <span class="highlight-purple">Angular</span> y <span class="highlight-blue">TypeScript</span>. Mi experiencia abarca desde sistemas de escritorio hasta aplicaciones web modernas.</p>
                 
-                <p>Soy egresado de Ingeniería de Sistemas, lo que me ha proporcionado una base sólida 
-                en desarrollo de software y arquitectura de sistemas. Cuando no estoy programando, 
-                me mantengo actualizado con las últimas tendencias tecnológicas y disfruto explorando 
-                nuevas herramientas que puedan mejorar mis habilidades como desarrollador.</p>
+                <p id="about-p3">Egresado de <span class="highlight-purple">Ingeniería de Sistemas</span>, combino conocimientos sólidos en arquitectura de software con pasión por el código limpio y las mejores prácticas.</p>
                 
                 <a href="#contact" class="retro-btn">Contactar</a>
             </div>
@@ -1774,6 +2173,7 @@
                     <span class="skill-tag">JavaScript</span>
                     <span class="skill-tag">jQuery</span>
                     <span class="skill-tag">Angular</span>
+                    <span class="skill-tag">TypeScript</span>
                     <span class="skill-tag">HTML5</span>
                     <span class="skill-tag">CSS3</span>
                 </div>
@@ -2122,6 +2522,30 @@
                     console.log('❌ Timeline container NO encontrado');
                 }
             }, 100);
+
+            // ==========================================================================
+            // ALTERNANCIA ENTRE CUADRADOS Y PONG EN EL HERO
+            // ==========================================================================
+            const pongGame = document.querySelector('.pong-game');
+            const fallingSquares = document.querySelector('.falling-squares');
+            let showingPong = true;
+
+            function toggleHeroAnimation() {
+                if (showingPong) {
+                    // Ocultar Pong, mostrar cuadrados
+                    pongGame.style.display = 'none';
+                    fallingSquares.style.display = 'block';
+                    showingPong = false;
+                } else {
+                    // Ocultar cuadrados, mostrar Pong
+                    fallingSquares.style.display = 'none';
+                    pongGame.style.display = 'block';
+                    showingPong = true;
+                }
+            }
+
+            // Alternar cada 4 segundos
+            setInterval(toggleHeroAnimation, 4000);
         });
 
         // ==========================================================================
@@ -2173,30 +2597,12 @@
                 }
             });
 
-            // Efecto de escritura para el hero
+            // Efecto de escritura para el hero (DESACTIVADO - Solo iluminación)
             const text = "Full Stack Developer";
             const typingElement = $('.typing-effect');
-            let index = 0;
-
-            function typeWriter() {
-                if (index < text.length) {
-                    typingElement.text(text.slice(0, index + 1));
-                    index++;
-                    setTimeout(typeWriter, 100);
-                } else {
-                    // Reiniciar después de una pausa
-                    setTimeout(() => {
-                        index = 0;
-                        typingElement.text('');
-                        typeWriter();
-                    }, 3000);
-                }
-            }
-
-            // Iniciar efecto de escritura después del loader
-            setTimeout(() => {
-                typeWriter();
-            }, 4500);
+            
+            // Mostrar texto completo sin efecto de escritura
+            typingElement.text(text);
 
             // Efecto parallax para el hero
             $(window).scroll(function() {
@@ -2311,6 +2717,97 @@
             $(window).on('resize', function() {
                 initTimelineCarousel();
             });
+
+            // ==========================================================================
+            // EFECTO DE ESCRITURA RETRO EN "SOBRE MÍ"
+            // ==========================================================================
+            
+            function typeWriterEffect() {
+                const paragraphs = [
+                    { id: 'about-p1', delay: 0 },
+                    { id: 'about-p2', delay: 1500 },
+                    { id: 'about-p3', delay: 3000 }
+                ];
+                
+                paragraphs.forEach(para => {
+                    setTimeout(() => {
+                        const element = document.getElementById(para.id);
+                        if (!element) return;
+                        
+                        const originalHTML = element.innerHTML;
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = originalHTML;
+                        const fullText = tempDiv.textContent;
+                        
+                        element.innerHTML = '';
+                        element.classList.add('typing');
+                        
+                        let charIndex = 0;
+                        
+                        function typeChar() {
+                            if (charIndex < fullText.length) {
+                                const currentText = fullText.substring(0, charIndex + 1);
+                                
+                                // Reconstruir con los spans de colores
+                                let newHTML = originalHTML;
+                                const tempDiv2 = document.createElement('div');
+                                tempDiv2.innerHTML = originalHTML;
+                                tempDiv2.childNodes.forEach(node => {
+                                    if (node.nodeType === 3) { // Text node
+                                        const visibleLength = Math.min(currentText.length - charIndex + node.textContent.length, node.textContent.length);
+                                        node.textContent = node.textContent.substring(0, visibleLength);
+                                    }
+                                });
+                                
+                                element.textContent = currentText;
+                                
+                                // Aplicar colores manualmente
+                                if (currentText.includes('Alexander')) {
+                                    element.innerHTML = element.innerHTML.replace('Alexander', '<span class="highlight-purple">Alexander</span>');
+                                }
+                                if (currentText.includes('Full Stack')) {
+                                    element.innerHTML = element.innerHTML.replace('Full Stack', '<span class="highlight-blue">Full Stack</span>');
+                                }
+                                if (currentText.includes('PHP/Laravel')) {
+                                    element.innerHTML = element.innerHTML.replace('PHP/Laravel', '<span class="highlight-purple">PHP/Laravel</span>');
+                                }
+                                if (currentText.includes('Angular')) {
+                                    element.innerHTML = element.innerHTML.replace('Angular', '<span class="highlight-purple">Angular</span>');
+                                }
+                                if (currentText.includes('TypeScript')) {
+                                    element.innerHTML = element.innerHTML.replace('TypeScript', '<span class="highlight-blue">TypeScript</span>');
+                                }
+                                if (currentText.includes('Ingeniería de Sistemas')) {
+                                    element.innerHTML = element.innerHTML.replace('Ingeniería de Sistemas', '<span class="highlight-purple">Ingeniería de Sistemas</span>');
+                                }
+                                
+                                charIndex++;
+                                setTimeout(typeChar, 15);
+                            }
+                        }
+                        
+                        typeChar();
+                        
+                    }, para.delay);
+                });
+            }
+            
+            // Observer para activar el efecto cuando la sección es visible
+            const aboutObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.target.id === 'about') {
+                        typeWriterEffect();
+                        aboutObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.3
+            });
+            
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+                aboutObserver.observe(aboutSection);
+            }
 
             // ==========================================================================
             // BOTÓN SCROLL TO TOP
@@ -2458,6 +2955,36 @@
             const projectsSection = document.getElementById('projects');
             if (projectsSection) {
                 projectsObserver.observe(projectsSection);
+            }
+
+            // ==========================================================================
+            // ANIMACIÓN DE BARRAS DE PROGRESO EN SKILLS
+            // ==========================================================================
+            
+            let skillsAnimated = false;
+            
+            const skillsObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !skillsAnimated) {
+                        skillsAnimated = true;
+                        
+                        // Animar todas las categorías de habilidades
+                        const skillCategories = document.querySelectorAll('.skill-category');
+                        skillCategories.forEach((category, index) => {
+                            setTimeout(() => {
+                                category.classList.add('animate');
+                            }, index * 200); // Delay escalonado para cada categoría
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.3 // Se activa cuando el 30% de la sección es visible
+            });
+            
+            // Observar la sección de skills
+            const skillsSection = document.getElementById('skills');
+            if (skillsSection) {
+                skillsObserver.observe(skillsSection);
             }
         });
 
